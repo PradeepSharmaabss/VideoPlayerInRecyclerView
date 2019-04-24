@@ -9,14 +9,25 @@
             type="test.pradeep.pradeeptest.VideoModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="@dimen/fab_margin"
+            android:text="@{viewModel.name}"
+            android:textColor="@android:color/background_dark"
+            android:textSize="22sp" />
 
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:videoUrl="@{viewModel.url}" />
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </layout>
