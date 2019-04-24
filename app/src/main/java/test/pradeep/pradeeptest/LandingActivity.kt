@@ -16,6 +16,8 @@ import test.pradeep.pradeeptest.databinding.ActivityLandingBinding
 class LandingActivity : AppCompatActivity() {
 
     internal lateinit var binding: ActivityLandingBinding
+    var list = ArrayList<VideoModel>()
+    var filterList = ArrayList<VideoModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_landing)
@@ -25,7 +27,7 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun setData() {
-        var list = ArrayList<VideoModel>()
+
         for (x in 0..20) {
             var videoModel = VideoModel()
             if (x % 2 == 0)
@@ -34,8 +36,9 @@ class LandingActivity : AppCompatActivity() {
                 videoModel.url = "https://androidwave.com/media/androidwave-video-6.mp4"
             videoModel.name = "Video" + "$x"
             list.add(videoModel)
+            filterList.add(videoModel)
         }
-        binding.recyclerView.adapter = MyRecyclerViewAdapter(list, this)
+        binding.recyclerView.adapter = MyRecyclerViewAdapter(filterList, this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -45,6 +48,13 @@ class LandingActivity : AppCompatActivity() {
         val searchView = MenuItemCompat.getActionView(searchViewItem) as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+                filterList.clear()
+                list.forEachIndexed { index, videoModel ->
+                    if (list[index].name!!.toLowerCase().equals(query.toLowerCase().trim())) {
+                        filterList.add(list[index])
+                    }
+                }
+                binding.recyclerView.adapter = MyRecyclerViewAdapter(filterList, applicationContext)
                 searchView.clearFocus()
                 return false
 
