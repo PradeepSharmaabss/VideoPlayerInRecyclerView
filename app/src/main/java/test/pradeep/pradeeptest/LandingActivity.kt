@@ -3,9 +3,9 @@ package test.pradeep.pradeeptest
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.view.MenuItemCompat
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
+import android.text.TextUtils
 import android.view.Menu
 import android.widget.SearchView
 import kotlinx.android.synthetic.main.activity_landing.*
@@ -27,7 +27,6 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun setData() {
-
         for (x in 0..20) {
             var videoModel = VideoModel()
             if (x % 2 == 0)
@@ -61,6 +60,10 @@ class LandingActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
+                if(TextUtils.isEmpty(newText)){
+                    binding.recyclerView.adapter = MyRecyclerViewAdapter(list, applicationContext)
+                }
+
                 return false
             }
         })
